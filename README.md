@@ -13,7 +13,19 @@
     As caixinhas de correio são as ***Queues** as rotas que pertencem a agência/casa do destinatário são as **Routes**
 
 
-
+**Dependências** - incluir as seguintes dependências no projeto   
+```
+		<!-- Dependencias RabbitMQ -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+```
 
 [RabbitMqConfiguration](./src/main/java/com/example/demo/config/RabbitMqConfiguration.java) - Utilizado para configurar a Exchange, as filas e os Bindings, além da criação do Bean **RabbitTemplate** utilizado para o envio e conversão das mensagens.
 Essa configuração é feita toda com beans. 
