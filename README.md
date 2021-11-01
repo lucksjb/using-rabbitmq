@@ -1,5 +1,6 @@
 <center><img src="./images/rabbitmq_logo.png"></center>  
----
+
+
 # PROJETO EXEMPLO DE RABBITMQ
 
 ## Objetivo
