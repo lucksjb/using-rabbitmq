@@ -21,6 +21,7 @@ public class RabbitMqConfiguration  {
     public static final String EXCHANGE_NAME = "Machines";
     
 
+    // Cria a exchange
     @Bean
     public Exchange declareExchange() {
         return ExchangeBuilder.directExchange(EXCHANGE_NAME)
@@ -28,6 +29,7 @@ public class RabbitMqConfiguration  {
                 .build();
     }
 
+    // Cria as Filas 
     @Bean
     public Queue queueUM() {
         return QueueBuilder.durable("fila-01")
@@ -49,6 +51,7 @@ public class RabbitMqConfiguration  {
                 .build();
     }
 
+    // Faz os binding entre Exchange / fila 
     @Bean
     public Binding bindingMachineQueueUM(Exchange exchange, Queue queueUM) {
         return BindingBuilder.bind(queueUM)
@@ -56,8 +59,8 @@ public class RabbitMqConfiguration  {
                 .with("Machines.fila-01")
                 .noargs();
     }
-    @Bean
 
+    @Bean
     public Binding bindingMachineQueueDOIS(Exchange exchange, Queue queueDOIS) {
         return BindingBuilder.bind(queueDOIS)
                 .to(exchange)
@@ -72,7 +75,7 @@ public class RabbitMqConfiguration  {
                 .noargs();
     }
 
-    // bean de conversão do objetos java / json
+    // bean de RabbitTemplate, utilizado para converter/enviar mensagens 
     @Bean
     @Autowired
     public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
@@ -81,6 +84,7 @@ public class RabbitMqConfiguration  {
         return rabbitTemplate;
     }
 
+    // Bean também utilizado para conversão das mensagens  
     @Bean
     public MessageConverter producerJackson2MessageConverter() {
         return new Jackson2JsonMessageConverter();
