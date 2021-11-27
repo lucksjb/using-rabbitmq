@@ -12,6 +12,34 @@
     No liguagem de RabbitMQ, você é o **Producer/Publisher** (ou produtor da mensagem), o destinatário é o **Consumer** (ou consumidor da mensagem) e a agência de correio uma **Exchange**.
     As caixinhas de correio são as ***Queues** as rotas que pertencem a agência/casa do destinatário são as **Routes**
 
+### Tipos de exchanges  
+* Direct &rarr; esse tipo de exchange ao receber a mensagem já encaminha diretamente para uma determinada fila   
+* Fanout &rarr; esse tipo de exchange ao receber a mensagem encaminha para todas as filas que estão binded (relacionadas) com essa exchange  
+* Topic &rarr; consegue colocar algumas regras (com wildcar nas routing keys) que dependendo da regra na routing-key encaminha para determinadas filas  
+* Headers &rarr; coloca no header para quais filas quer que seja enviada a mensagem  **formato menos utilizado** * 
+
+### Queues  
+* por padrão as filas são FIFO, dá pra mudar mas não é aconselhavel  
+* Propriedades das filas:
+	* Durable: se ela deve permanecer salva mesmo depois de um restart no broker  (**por padrão se usa filas duráveis**)
+	* Auto-delete: removida automaticamente quando o consumer se desconencta 
+	* Expiry: Define o tempo que não há mensages publicadas ou clientes consumindo  e que essa fila será automaticamente removida  
+	* Message TTL: tempo de vida da mensagem, caso não seja consumida e removida da fila automáticamente  
+	* Overflow: pode definir um limite de tamanho da fila ou tamanho das mensagens e dependendo aciona algum dos comportamentos abaixo 
+		*  Drop head &rarr; remove a mensagem mais antiga para receber a nova (caso estoure o limite configurado) 
+		*  Reject publish &rarr; rejeita novas publicações de mensagens nessa fila (caso estoure o limite configurado) 
+	*  Exclusive: Somente vai conseguir acessar essa fila quem está no mesmo canal (_channel_) que criou a fila 
+	*  Max length ou bytes: diretamente relacionado com a propriedade _Overflow_, quantidade de mensagens ou tamanho em bytes máximo permitido
+
+### Dead letter queues 
+* Algumas mensagens não consefguem ser entregues por qualquer motivo 
+* São encaminhadas para um Exchange específica que roteia as mensagens para uma _Dead letter queue_  
+* Tais mensagens podem ser consumidas e averiguadas posteriormente  
+
+### Lazy queues
+* Mensagens são armazenadas em disco 
+* Mensagens não são perdidas mesmo que o broker restart
+* Exige alto I/O do disco 
 
 **Dependências** - incluir as seguintes dependências no projeto   
 ```
@@ -121,7 +149,7 @@ https://medium.com/dev-cave/rabbit-mq-parte-i-c15e5f89d94
 http://nelsonsar.github.io/2013/10/29/AMQP-building-blocks.html   
 http://nelsonsar.github.io/2013/11/07/RabbitMQ-exchange-types.html   
 https://medium.com/totvsdevelopers/spring-boot-rabbitmq-porque-considerar-o-uso-de-mensageria-no-seu-projeto-3aed6637c4b4   
-
+http://tryrabbitmq.com/ &rarr; simulador do rabbitMq 
 
 by Luck 
         12:21 01/11/2021
