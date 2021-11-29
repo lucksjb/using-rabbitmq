@@ -41,6 +41,15 @@
 * Mensagens não são perdidas mesmo que o broker restart
 * Exige alto I/O do disco 
 
+### Consumer acknowledgement  
+* Basic.ack &rarr; Tudo ok, recebi e consegui processar, pode tirar aqui   
+* Basic.reject &rarr; recebi, mas como não consegui processar, deixa a mensagem na fila   
+* Basic.Nack &rarr; praticamente igual ao reject, porém, consegue rejeitar varias mensagens ao mesmo tempo   
+
+### Publisher confirms  
+* Você deve atribuiir um ID a mensagem, ao ser recebida a exchange te devolve um Ack:ID se foi aceita e um Nack:ID se não foi aceita na exchange
+
+
 **Dependências** - incluir as seguintes dependências no projeto   
 ```
 		<!-- Dependencias RabbitMQ -->
